@@ -5,13 +5,14 @@ const cors = require("cors");
 
 const PORT = process.env.PORT || 8080;
 
+
+
+// Create and configure app
 // create an express app
 const app = express();
 
 // let the app use cors
 app.use(cors());
-
-const db = require("./app/models");
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -25,6 +26,8 @@ app.get('/health', (req, res) => {
 
 require('./app/routes/user.routes')(app);
 require('./app/routes/posts.routes')(app);
+
+const db = require("./app/models");
 
 db.sequelize.sync().then(
   app.listen(PORT,  ()=> {

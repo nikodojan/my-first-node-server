@@ -1,5 +1,5 @@
 const db = require('../models');
-const Post = db.sequelize.models.Post;
+const { Post } = db.sequelize.models;
 const Op = db.Sequelize.Op;
 
 exports.getAllPosts = (req, res) => {

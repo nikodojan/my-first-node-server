@@ -1,5 +1,5 @@
 const db = require('../models');
-const User = db.sequelize.models.User;
+const { User } = db.sequelize.models;
 const Op = db.Sequelize.Op;
 
 exports.getAllUsers = (req, res) => {

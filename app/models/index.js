@@ -4,8 +4,10 @@
  * sequelize (lower) referst to the instance of a db connection
  */
 const Sequelize = require("sequelize");
+const { configureModels } = require('./modelConfig')
 
 /**
+ * Create an instance of sequelixe with db settings
  * testdb: databse name
  * root: username
  * '': password
@@ -17,22 +19,18 @@ const sequelize = new Sequelize('testdb', 'root', '', {
   port: 3306
 });
 
+// create a db object, for simpler handling ???
 const db = {};
-
-// create a db object
-//const db = require('./models');
 
 // add object properties
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// add model to db object and pass the sequelize obj as parameters for the model 
-db.Users = require("./user.model.js")(sequelize, Sequelize);
-db.Posts = require("./post.model.js")(sequelize, Sequelize);
+// define models in sequelize
+require("./user.model.js")(sequelize, Sequelize);
+require("./post.model.js")(sequelize, Sequelize);
 
-db.Posts.belongsTo(db.Users);
+configureModels(sequelize);
 
-db.Users.hasMany(db.Posts);
-
-// export the db object
+// export the db object to be used in the server app
 module.exports = db;
